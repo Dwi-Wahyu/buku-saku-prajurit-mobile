@@ -21,6 +21,10 @@ import PancasilaScreen from 'screens/PancasilaScreen';
 import SaptaMargaScreen from 'screens/SaptaMargaScreen';
 import SumpahPrajuritScreen from 'screens/SumpahPrajuritScreen';
 import WajibTniScreen from 'screens/WajibTniScreen';
+import LupaKataSandiScreen from 'screens/LupaKataSandiScreen';
+import GarjasHistoryScreen from 'screens/GarjasHistoryScreen';
+import BakPanHistoryScreen from 'screens/BakPanHistoryScreen';
+import BakPistolHistoryScreen from 'screens/BakPistolHistoryScreen';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -28,20 +32,24 @@ export type RootStackParamList = {
   Berita: undefined;
   DetailBerita: { beritaId: string };
   Garjas: undefined;
+  GarjasHistory: undefined;
   NilaiLatihan: undefined;
   UtpHistory: undefined;
   LatihanSatuanHistory: undefined;
   BakPan: undefined;
+  BakPanHistory: undefined;
   BakPistol: undefined;
+  BakPistolHistory: undefined;
   Pancasila: undefined;
   SaptaMarga: undefined;
   SumpahPrajurit: undefined;
   WajibTNI: undefined;
+  LupaKataSandi: undefined;
 };
 
 export type BottomTabParamList = {
   Home: undefined;
-  Profile: undefined;
+  Profil: undefined;
   Pengaturan: undefined;
 };
 
@@ -58,7 +66,7 @@ function MainTabs() {
       }}
       tabBar={() => null}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profil" component={ProfileScreen} />
       <Tab.Screen name="Pengaturan" component={SettingsScreen} />
     </Tab.Navigator>
   );
@@ -82,6 +90,8 @@ export default function Navigation() {
 
             <Stack.Screen name="Garjas" component={GarjasScreen} />
 
+            <Stack.Screen name="GarjasHistory" component={GarjasHistoryScreen} />
+
             <Stack.Screen name="NilaiLatihan" component={NilaiLatihanScreen} />
 
             <Stack.Screen name="UtpHistory" component={UtpHistoryScreen} />
@@ -90,7 +100,11 @@ export default function Navigation() {
 
             <Stack.Screen name="BakPan" component={BakPanScreen} />
 
+            <Stack.Screen name="BakPanHistory" component={BakPanHistoryScreen} />
+
             <Stack.Screen name="BakPistol" component={BakPistolScreen} />
+
+            <Stack.Screen name="BakPistolHistory" component={BakPistolHistoryScreen} />
 
             <Stack.Screen name="Pancasila" component={PancasilaScreen} />
 
@@ -103,7 +117,11 @@ export default function Navigation() {
             <Stack.Screen name="DetailBerita" component={DetailBeritaScreen} />
           </>
         ) : (
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <>
+            <Stack.Screen name="Login" component={LoginScreen} />
+
+            <Stack.Screen name="LupaKataSandi" component={LupaKataSandiScreen} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>

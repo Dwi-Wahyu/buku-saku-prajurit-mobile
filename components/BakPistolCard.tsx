@@ -36,7 +36,7 @@ export function BakPistolCard({ latihanData }: { latihanData: BakPistol }) {
         />
       </Card>
 
-      <View style={{ marginBottom: 40 }}></View>
+      <View style={{ marginBottom: 20 }}></View>
 
       <Modal
         animationType="fade"

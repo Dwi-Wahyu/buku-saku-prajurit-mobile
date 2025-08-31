@@ -33,7 +33,7 @@ export function EachBakPan({ latihanData }: { latihanData: BakPan }) {
         </View>
       </Card>
 
-      <View style={{ marginBottom: 40 }}></View>
+      <View style={{ marginBottom: 20 }}></View>
     </ScrollView>
   );
 }

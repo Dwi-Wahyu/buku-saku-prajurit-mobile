@@ -1,19 +1,19 @@
 import React, { useRef, useEffect } from 'react';
 import { Text, View, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
-import Card from 'components/ui/Card'; // Impor komponen Card Anda
+import Card from 'components/ui/Card';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from 'navigation'; // Sesuaikan path jika perlu
-import Colors from 'constants/Colors'; // Pastikan path ini benar
+import { RootStackParamList } from 'navigation';
+import Colors from 'constants/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 type BottomBarNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const menuItems = [
   { name: 'Home', icon: 'home', route: 'Home' },
-  { name: 'Profile', icon: 'user', route: 'Profile' },
+  { name: 'Profil', icon: 'user', route: 'Profil' },
   { name: 'Pengaturan', icon: 'cog', route: 'Pengaturan' },
 ];
 
@@ -68,18 +68,17 @@ export default function BottomBar() {
       <Card padding={10}>
         <View style={styles.menuWrapper}>
           {menuItems.map((item, index) => {
-            const isActive = route.name === item.name; // Menggunakan item.name
-            const iconColor = isActive ? Colors.primary : '#888'; // Gunakan Colors.primary dari constants
-            const textColor = isActive ? Colors.primary : '#888'; // Gunakan Colors.primary dari constants
+            const isActive = route.name === item.name;
+            const iconColor = isActive ? Colors.primary : '#888';
+            const textColor = isActive ? Colors.primary : '#888';
 
             return (
               <TouchableOpacity
                 key={item.name}
                 style={styles.menuItem}
-                onPress={() => handlePress(item.route as keyof RootStackParamList, index)} // route di sini adalah nama Stack Screen, bukan nama tab
+                onPress={() => handlePress(item.route as keyof RootStackParamList, index)}
                 activeOpacity={0.7}>
                 <Animated.View style={{ transform: [{ scale: animatedValues[index] }] }}>
-                  {/* Anda perlu memastikan Icon ini sudah diimpor dengan benar, misalnya dari 'react-native-vector-icons/FontAwesome' */}
                   <Icon name={item.icon} size={24} color={iconColor} />
                 </Animated.View>
                 <Text style={[styles.menuText, { color: textColor }]}>{item.name}</Text>
@@ -94,16 +93,13 @@ export default function BottomBar() {
 
 const styles = ScaledSheet.create({
   container: {
-    // Background ini transparan agar konten di bawah BottomBar terlihat
     backgroundColor: 'transparent',
-    // Position absolute dan bottom: 0 agar BottomBar selalu berada di bagian bawah layar
     position: 'absolute',
     bottom: 0,
-    width: Dimensions.get('window').width, // Lebar penuh layar
-    // Tambahkan padding horizontal agar Card tidak menempel di sisi layar
+    width: Dimensions.get('window').width,
     paddingHorizontal: '15@s',
-    paddingBottom: '20@s', // Padding bawah agar konten tidak terlalu dekat dengan tepi bawah
-    alignSelf: 'center', // Agar Card di tengah jika width tidak 100%
+    paddingBottom: '20@s',
+    alignSelf: 'center',
   },
   menuWrapper: {
     flexDirection: 'row',

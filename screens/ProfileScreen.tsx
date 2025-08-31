@@ -7,7 +7,7 @@ import Card from '../components/ui/Card'; // Sesuaikan path
 import { ScaledSheet } from 'react-native-size-matters';
 import Colors from '../constants/Colors'; // Sesuaikan path
 
-const ADMIN_URL = process.env.EXPO_PUBLIC_ADMIN_URL || 'http://192.168.172.38:3000';
+const ADMIN_URL = process.env.EXPO_PUBLIC_ADMIN_URL;
 
 export default function ProfileScreen() {
   const { userSession } = useAuth();
@@ -22,20 +22,13 @@ export default function ProfileScreen() {
     );
   }
 
-  const {
-    name,
-    username,
-
-    role,
-    avatar,
-    profile,
-  } = userSession;
+  const { name, username, role, avatar, profile } = userSession;
 
   const { berat_badan, golongan, jenis_kelamin, pangkat, tinggi_badan, umur } = profile;
 
   const avatarUrl = avatar
-    ? `${ADMIN_URL}/${avatar}`
-    : `https://placehold.co/120x120/${Colors.primary.substring(1)}/${Colors.white.substring(1)}?text=AV`;
+    ? `${ADMIN_URL}${avatar}`
+    : `${ADMIN_URL}/uploads/avatar/default-avatar.jpg`;
 
   return (
     <Background>
@@ -221,7 +214,7 @@ const styles = ScaledSheet.create({
     marginTop: '10@s',
   },
   editButton: {
-    backgroundColor: Colors.primary, // Warna primer untuk tombol edit
+    backgroundColor: Colors.primary,
     paddingVertical: '12@s',
     paddingHorizontal: '25@s',
     borderRadius: '10@s',
@@ -237,7 +230,7 @@ const styles = ScaledSheet.create({
     fontWeight: 'bold',
   },
   logoutButton: {
-    backgroundColor: Colors.danger, // Warna danger untuk tombol logout
+    backgroundColor: Colors.danger,
     paddingVertical: '12@s',
     paddingHorizontal: '25@s',
     borderRadius: '10@s',

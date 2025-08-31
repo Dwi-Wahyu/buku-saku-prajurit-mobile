@@ -16,9 +16,9 @@ import LoadingSplash from 'components/LoadingSplash';
 import { useAuth } from 'context/AuthContext';
 import { BakPistolCard } from 'components/BakPistolCard';
 
-type ScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'BakPistol'>;
+type ScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'BakPistolHistory'>;
 
-export default function BakPistolScreen() {
+export default function BakPistolHistoryScreen() {
   const navigation = useNavigation<ScreenNavigationProps>();
 
   const { userSession, isLoading } = useAuth();
@@ -38,7 +38,7 @@ export default function BakPistolScreen() {
   }
 
   const { fetchProtected } = useApi();
-  const [latihanData, setLatihanData] = useState<BakPistol | null>(null);
+  const [latihanData, setLatihanData] = useState<BakPistol[] | []>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function BakPistolScreen() {
     setLoading(true);
 
     try {
-      const result = await fetchProtected(`/${userSession?.id}/bak-pistol/`);
+      const result = await fetchProtected(`/${userSession?.id}/bak-pistol/history`);
 
       setLatihanData(result);
     } catch (error) {
@@ -63,7 +63,7 @@ export default function BakPistolScreen() {
 
   return (
     <Background>
-      <TopBarContent title="BAK PISTOL - 15 M" navigation={navigation} />
+      <TopBarContent title="REKAP NILAI BAK PISTOL" navigation={navigation} />
 
       {loading && (
         <View style={styles.loadingContainer}>
@@ -72,19 +72,15 @@ export default function BakPistolScreen() {
         </View>
       )}
 
-      {!loading && latihanData && (
+      {!loading && latihanData.length !== 0 && (
         <ScrollView>
-          <BakPistolCard latihanData={latihanData} />
-
-          <Button
-            onPress={() => navigation.push('BakPistolHistory')}
-            title="Lihat History"
-            style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
-          />
+          {latihanData.map((bakpistol, bakpistolIdx) => (
+            <BakPistolCard latihanData={bakpistol} key={bakpistolIdx} />
+          ))}
         </ScrollView>
       )}
 
-      {!loading && !latihanData && (
+      {!loading && latihanData.length === 0 && (
         <View style={styles.container}>
           <Card>
             <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
@@ -93,6 +89,12 @@ export default function BakPistolScreen() {
           </Card>
         </View>
       )}
+
+      <Button
+        onPress={() => navigation.goBack()}
+        title="Kembali"
+        style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
+      />
     </Background>
   );
 }

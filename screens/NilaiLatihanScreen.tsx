@@ -70,51 +70,73 @@ export default function NilaiLatihanScreen() {
         </View>
       )}
 
+      {!loading && !latihanData && (
+        <View style={styles.container}>
+          <Card>
+            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              Anda Belum Memiliki Penilaian Utp Ataupun Latihan Satuan
+            </Text>
+          </Card>
+        </View>
+      )}
+
       {!loading && latihanData && (
         <View style={styles.container}>
-          <Card style={styles.sectionCard}>
-            <Text style={styles.sectionTitle}>UTP Umum dan Jabatan</Text>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>Tingkat Kecakapan :</Text>
-              <Text style={styles.detailValue}>
-                {latihanData.utp.utp_umum_dan_jabatan_options.tingkat_kecakapan}
+          {latihanData.utp ? (
+            <Card style={styles.sectionCard}>
+              <Text style={styles.sectionTitle}>UTP Umum dan Jabatan</Text>
+              <View style={styles.detailRow}>
+                <Text style={styles.detailLabel}>Tingkat Kecakapan :</Text>
+                <Text style={styles.detailValue}>
+                  {latihanData.utp.utp_umum_dan_jabatan_options.tingkat_kecakapan}
+                </Text>
+              </View>
+              <View style={styles.detailRow}>
+                <Text style={styles.detailLabel}>UTP Umum :</Text>
+                <Text style={styles.detailValue}>{latihanData.utp.nilai_umum}</Text>
+              </View>
+              <View style={styles.detailRow}>
+                <Text style={styles.detailLabel}>UTP Jabatan :</Text>
+                <Text style={styles.detailValue}>{latihanData.utp.nilai_jabatan}</Text>
+              </View>
+
+              <Button
+                onPress={() => navigation.push('UtpHistory')}
+                title="Lihat History"
+                style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
+              />
+            </Card>
+          ) : (
+            <Card style={{ marginBottom: 20 }}>
+              <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                Anda Belum Memiliki Penilaian Utp Umum Dan Jabatan
               </Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>UTP Umum :</Text>
-              <Text style={styles.detailValue}>{latihanData.utp.nilai_umum}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <Text style={styles.detailLabel}>UTP Jabatan :</Text>
-              <Text style={styles.detailValue}>{latihanData.utp.nilai_jabatan}</Text>
-            </View>
+            </Card>
+          )}
 
-            <Button
-              onPress={() => navigation.push('UtpHistory')}
-              title="Lihat History"
-              style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
-            />
-          </Card>
+          {latihanData.latihan_satuan.length === 0 ? (
+            <Card style={{ marginBottom: 20 }}>
+              <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                Anda Belum Memiliki Penilaian Utp Umum Dan Jabatan
+              </Text>
+            </Card>
+          ) : (
+            <Card style={styles.sectionCard}>
+              <Text style={styles.sectionTitle}>Latihan Satuan</Text>
 
-          <Card style={styles.sectionCard}>
-            <Text style={styles.sectionTitle}>Latihan Satuan</Text>
-            {latihanData.latihan_satuan.length !== 0 && (
-              <>
-                {latihanData.latihan_satuan.map((latihan_satuan, idx) => (
-                  <View style={styles.detailRow} key={idx}>
-                    <Text style={styles.detailLabel}>{latihan_satuan.nama} :</Text>
-                    <Text style={styles.detailValue}>{latihan_satuan.nilai}</Text>
-                  </View>
-                ))}
-              </>
-            )}
-
-            <Button
-              onPress={() => navigation.push('LatihanSatuanHistory')}
-              title="Lihat History"
-              style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
-            />
-          </Card>
+              {latihanData.latihan_satuan.map((latihan_satuan, idx) => (
+                <View style={styles.detailRow} key={idx}>
+                  <Text style={styles.detailLabel}>{latihan_satuan.nama} :</Text>
+                  <Text style={styles.detailValue}>{latihan_satuan.nilai}</Text>
+                </View>
+              ))}
+              <Button
+                onPress={() => navigation.push('LatihanSatuanHistory')}
+                title="Lihat History"
+                style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
+              />
+            </Card>
+          )}
         </View>
       )}
     </Background>

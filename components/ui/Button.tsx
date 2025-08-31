@@ -9,6 +9,7 @@ type ButtonProps = {
   style?: ViewStyle;
   textStyle?: TextStyle;
   children?: ReactNode;
+  variant?: 'outline' | 'link';
 };
 
 export default function Button({
@@ -18,12 +19,13 @@ export default function Button({
   textStyle,
   disabled = false,
   children,
+  variant = 'outline',
 }: ButtonProps) {
   if (children) {
     return (
       <TouchableOpacity
         disabled={disabled}
-        style={[styles.button, style]}
+        style={[styles.outlineButton, style]}
         onPress={onPress}
         activeOpacity={0.7}>
         {children}
@@ -31,10 +33,25 @@ export default function Button({
     );
   }
 
+  if (variant === 'link') {
+    return (
+      <TouchableOpacity disabled={disabled} style={[style]} onPress={onPress} activeOpacity={0.7}>
+        <Text
+          style={[
+            styles.text,
+            textStyle,
+            { textDecorationLine: 'underline', textAlign: 'center' },
+          ]}>
+          {title}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
   return (
     <TouchableOpacity
       disabled={disabled}
-      style={[styles.button, style]}
+      style={[styles.outlineButton, style]}
       onPress={onPress}
       activeOpacity={0.7}>
       <Text style={[styles.text, textStyle]}>{title}</Text>
@@ -43,9 +60,14 @@ export default function Button({
 }
 
 const styles = StyleSheet.create({
-  button: {
+  outlineButton: {
     borderColor: Colors.primary,
     borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+    alignItems: 'center',
+  },
+  linkButton: {
     paddingVertical: 10,
     paddingHorizontal: 24,
     alignItems: 'center',

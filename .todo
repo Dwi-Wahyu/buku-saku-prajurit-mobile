@@ -1,1 +1,5 @@
 - perbaiki fungsi ketika login, user tidak perlu reload aplikasi
+
+- tambahkan judul rincian sikap pada modal
+
+- fix halaman nilai latihan, force close klo masukka

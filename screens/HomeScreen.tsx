@@ -113,7 +113,7 @@ export default function HomeScreen() {
         ) : (
           <View>
             {beritaData.length == 0 ? (
-              <Text>Belum ada berita terbaru</Text>
+              <Text style={{ textAlign: 'center' }}>Belum ada berita terbaru</Text>
             ) : (
               <View>
                 {beritaData.map((berita) => (

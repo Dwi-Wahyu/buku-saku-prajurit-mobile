@@ -45,7 +45,9 @@ export default function BeritaScreen({ navigation }: Props) {
         ) : (
           <View style={ScaledSheet.create({ mt: { marginTop: '15@s' } }).mt}>
             {!beritaData ? (
-              <Text>Belum ada berita terbaru</Text>
+              <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                Belum ada berita terbaru
+              </Text>
             ) : (
               <View>
                 {beritaData.map((berita) => (

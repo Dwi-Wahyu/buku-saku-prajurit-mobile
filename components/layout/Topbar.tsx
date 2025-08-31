@@ -36,31 +36,31 @@ export default function TopBar() {
           <View style={styles.modalView}>
             <Button
               title="PANCASILA"
-              style={{ alignSelf: 'center', marginBottom: 20 }}
+              style={{ alignSelf: 'center', marginBottom: 20, width: '100%' }}
               onPress={() => navigation.push('Pancasila')}
             />
 
             <Button
               title="SAPTA MARGA"
-              style={{ alignSelf: 'center', marginBottom: 20 }}
+              style={{ alignSelf: 'center', marginBottom: 20, width: '100%' }}
               onPress={() => navigation.push('SaptaMarga')}
             />
 
             <Button
               title="SUMPAH PRAJURIT"
-              style={{ alignSelf: 'center', marginBottom: 20 }}
+              style={{ alignSelf: 'center', marginBottom: 20, width: '100%' }}
               onPress={() => navigation.push('SumpahPrajurit')}
             />
 
             <Button
               title="8 WAJIB TNI"
-              style={{ alignSelf: 'center', marginBottom: 20 }}
+              style={{ alignSelf: 'center', marginBottom: 20, width: '100%' }}
               onPress={() => navigation.push('WajibTNI')}
             />
 
             <Button
               title="Tutup"
-              style={{ width: 100, alignSelf: 'center' }}
+              style={{ width: '100%', alignSelf: 'center' }}
               onPress={() => setModalVisible(!modalVisible)}
             />
           </View>

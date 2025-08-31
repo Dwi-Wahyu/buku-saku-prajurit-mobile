@@ -15,9 +15,9 @@ import LoadingSplash from 'components/LoadingSplash';
 import { EachBakPan } from 'components/EachBakPan';
 import Button from 'components/ui/Button';
 
-type ScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'BakPan'>;
+type ScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'BakPanHistory'>;
 
-export default function BakPanScreen() {
+export default function BakPanHistoryScreen() {
   const navigation = useNavigation<ScreenNavigationProps>();
 
   const { userSession, isLoading } = useAuth();
@@ -37,7 +37,7 @@ export default function BakPanScreen() {
   }
 
   const { fetchProtected } = useApi();
-  const [latihanData, setLatihanData] = useState<BakPan | null>(null);
+  const [latihanData, setLatihanData] = useState<BakPan[] | []>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function BakPanScreen() {
     setLoading(true);
 
     try {
-      const result = await fetchProtected(`/${userSession?.id}/bak-pan/`);
+      const result = await fetchProtected(`/${userSession?.id}/bak-pan/history`);
 
       console.log(result);
 
@@ -64,7 +64,7 @@ export default function BakPanScreen() {
 
   return (
     <Background>
-      <TopBarContent title="BAK PAN - 100 M" navigation={navigation} />
+      <TopBarContent title="REKAP NILAI BAK PAN" navigation={navigation} />
 
       {loading && (
         <View style={styles.loadingContainer}>
@@ -73,14 +73,11 @@ export default function BakPanScreen() {
         </View>
       )}
 
-      {!loading && latihanData && (
+      {!loading && latihanData.length && (
         <ScrollView>
-          <EachBakPan latihanData={latihanData} />
-          <Button
-            onPress={() => navigation.push('BakPanHistory')}
-            title="Lihat History"
-            style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
-          />
+          {latihanData.map((bakpan, bakpanIdx) => (
+            <EachBakPan latihanData={bakpan} key={bakpanIdx} />
+          ))}
         </ScrollView>
       )}
 
@@ -93,6 +90,12 @@ export default function BakPanScreen() {
           </Card>
         </View>
       )}
+
+      <Button
+        onPress={() => navigation.goBack()}
+        title="Kembali"
+        style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
+      />
     </Background>
   );
 }

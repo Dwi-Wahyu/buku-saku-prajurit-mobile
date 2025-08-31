@@ -11,9 +11,14 @@ import { Garjas } from 'types/garjas';
 import { useAuth } from 'context/AuthContext';
 import LoadingSplash from 'components/LoadingSplash';
 import { formatDate } from 'helper/format-date';
+import Button from 'components/ui/Button';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'navigation';
+
+type ScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Garjas'>;
 
 export default function GarjasScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<ScreenNavigationProps>();
 
   const { userSession, isLoading } = useAuth();
 
@@ -32,7 +37,7 @@ export default function GarjasScreen() {
   }
 
   const { fetchProtected } = useApi();
-  const [garjasData, setGarjasData] = useState<Garjas[] | []>([]);
+  const [garjasData, setGarjasData] = useState<Garjas | null>(null);
   const [loadingGarjas, setLoadingGarjas] = useState(true);
 
   useEffect(() => {
@@ -63,13 +68,24 @@ export default function GarjasScreen() {
           <Text style={styles.loadingText}>Memuat Data Garjas</Text>
         </View>
       )}
-      {!loadingGarjas && garjasData.length !== 0 && (
+
+      {!loadingGarjas && !garjasData && (
+        <View style={styles.container}>
+          <Card>
+            <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              Anda Belum Memiliki Penilaian Kesegaran Jasmani
+            </Text>
+          </Card>
+        </View>
+      )}
+
+      {!loadingGarjas && garjasData && (
         <ScrollView style={styles.container}>
           <Card style={styles.dateCard}>
-            <Text style={styles.tanggalText}>{formatDate(new Date(garjasData[0].tanggal))}</Text>
+            <Text style={styles.tanggalText}>{formatDate(new Date(garjasData.tanggal))}</Text>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Kategori :</Text>
-              <Text style={styles.detailValue}>{garjasData[0].golongan}</Text>
+              <Text style={styles.detailValue}>{garjasData.golongan}</Text>
             </View>
           </Card>
 
@@ -82,11 +98,11 @@ export default function GarjasScreen() {
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Jarak :</Text>
-              <Text style={styles.detailValue}>{garjasData[0].lari}</Text>
+              <Text style={styles.detailValue}>{garjasData.lari}</Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Nilai :</Text>
-              <Text style={styles.detailValue}>{garjasData[0].garjas_a}</Text>
+              <Text style={styles.detailValue}>{garjasData.garjas_a}</Text>
             </View>
           </Card>
 
@@ -95,25 +111,25 @@ export default function GarjasScreen() {
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Pull Up :</Text>
               <Text style={styles.detailValue}>
-                {garjasData[0].pullup} Repetisi (Nilai : {garjasData[0].skor_b1})
+                {garjasData.pullup} Repetisi (Nilai : {garjasData.skor_b1})
               </Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Sit Up :</Text>
               <Text style={styles.detailValue}>
-                {garjasData[0].situp} Repetisi (Nilai : {garjasData[0].skor_b2})
+                {garjasData.situp} Repetisi (Nilai : {garjasData.skor_b2})
               </Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Push Up :</Text>
               <Text style={styles.detailValue}>
-                {garjasData[0].pushup} Repetisi (Nilai : {garjasData[0].skor_b3})
+                {garjasData.pushup} Repetisi (Nilai : {garjasData.skor_b3})
               </Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Shuttle Run :</Text>
               <Text style={styles.detailValue}>
-                {garjasData[0].shuttle_run} Detik (Nilai : {garjasData[0].skor_b4})
+                {garjasData.shuttle_run} Detik (Nilai : {garjasData.skor_b4})
               </Text>
             </View>
           </Card>
@@ -126,11 +142,11 @@ export default function GarjasScreen() {
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Waktu :</Text>
-              <Text style={styles.detailValue}>{garjasData[0].renang} Detik</Text>
+              <Text style={styles.detailValue}>{garjasData.renang} Detik</Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Nilai :</Text>
-              <Text style={styles.detailValue}>{garjasData[0].skor_renang}</Text>
+              <Text style={styles.detailValue}>{garjasData.skor_renang}</Text>
             </View>
           </Card>
 
@@ -138,17 +154,24 @@ export default function GarjasScreen() {
             <Text style={styles.sectionTitle}>Hasil Akumulasi</Text>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Nilai Garjas A :</Text>
-              <Text style={styles.detailValue}>{garjasData[0].garjas_a}</Text>
+              <Text style={styles.detailValue}>{garjasData.garjas_a}</Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Nilai Garjas B :</Text>
-              <Text style={styles.detailValue}>{garjasData[0].garjas_b}</Text>
+              <Text style={styles.detailValue}>{garjasData.garjas_b}</Text>
             </View>
             <View style={styles.detailRow}>
               <Text style={styles.detailLabel}>Nilai Akhir :</Text>
-              <Text style={styles.detailValue}>{garjasData[0].nilai_akhir}</Text>
+              <Text style={styles.detailValue}>{garjasData.nilai_akhir}</Text>
             </View>
           </Card>
+
+          <Button
+            onPress={() => navigation.push('GarjasHistory')}
+            title="Lihat History"
+            style={{ marginTop: 15, width: 150, alignSelf: 'center' }}
+          />
+
           <View style={{ marginBottom: 40 }}></View>
         </ScrollView>
       )}

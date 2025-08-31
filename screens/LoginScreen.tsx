@@ -1,5 +1,5 @@
-// LoginScreen.tsx
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import Background from 'components/layout/Background';
 import LoadingSplash from 'components/LoadingSplash';
 import Button from 'components/ui/Button';
@@ -12,9 +12,11 @@ import React, { useState, useEffect } from 'react'; // Import useEffect
 import { View, Text, ActivityIndicator, Image, Alert } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type ScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
-export default function LoginScreen({ navigation }: Props) {
+export default function LoginScreen() {
+  const navigation = useNavigation<ScreenNavigationProps>();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +28,6 @@ export default function LoginScreen({ navigation }: Props) {
 
   useEffect(() => {
     if (!isLoading && userSession) {
-      console.log('Session found on LoginScreen, navigating to Home.');
       navigation.replace('MainTabs');
     }
   }, [isLoading, userSession, navigation]);
@@ -50,19 +51,19 @@ export default function LoginScreen({ navigation }: Props) {
         body: JSON.stringify({ username, password }),
       });
 
-      console.log(response);
-
       const data = await response.json();
 
       const { access_token, refresh_token, user_details } = data;
 
-      if (response.ok) {
-        console.log(access_token);
+      console.log(data);
 
+      if (response.ok) {
         await signIn(access_token, refresh_token, user_details);
 
         Alert.alert('Sukses', 'Login berhasil!');
       } else {
+        console.log(response);
+
         Alert.alert('Login Gagal', 'Terjadi kesalahan.');
       }
     } catch (error) {
@@ -104,21 +105,6 @@ export default function LoginScreen({ navigation }: Props) {
             secureTextEntry
           />
 
-          {/* <View>
-            <Text style={styles.label}>Kode Captcha</Text>
-
-            <View className="flex gap-2">
-              <Image source={require('../assets/captcha.png')} />
-
-              <Input
-                placeholder="Masukkan Kode"
-                id="captcha-input"
-                value={password}
-                // onChangeText={setCaptchaCode}
-              />
-            </View>
-          </View> */}
-
           <Button style={{ width: 100, alignSelf: 'center', marginTop: 20 }} onPress={handleLogin}>
             {loading ? (
               <ActivityIndicator size="small" color={Colors.primary} />
@@ -128,6 +114,13 @@ export default function LoginScreen({ navigation }: Props) {
               </Text>
             )}
           </Button>
+
+          {/* <Button
+            style={{ width: 190, alignSelf: 'center', marginTop: 25 }}
+            onPress={() => navigation.push('LupaKataSandi')}
+            variant="link"
+            title="Lupa Kata Sandi"
+          /> */}
         </Card>
       </View>
     </Background>
