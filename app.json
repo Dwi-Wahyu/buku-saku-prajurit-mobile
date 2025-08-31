@@ -1,28 +1,21 @@
 {
   "expo": {
-    "name": "buku-saku-prajurit",
+    "name": "Buku Saku Prajurit",
     "slug": "buku-saku-prajurit",
     "version": "1.0.0",
-
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     },
-
     "experiments": {
       "tsconfigPaths": true
     },
-
     "plugins": [],
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -32,6 +25,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.dwi_wahyu.bukusakuprajurit"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2409ec4d-f1fa-4a90-bb91-22d6bbd540ec"
       }
     }
   }

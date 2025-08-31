@@ -1,0 +1,1 @@
+<p>Detail Berita . . .</p><p></p><img src="http://localhost:3000/uploads/berita/Ipconfig_2025-07-21T22-46-25-989Z_480fdf74-cb1d-4025-8402-c16081f319e1.jpg" draggable="true" style="width: 400px; height: auto; cursor: pointer; margin: 0px auto;"><p></p>

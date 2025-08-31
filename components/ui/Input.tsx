@@ -4,17 +4,17 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 // Menambahkan 'label' ke props standar TextInput
 interface InputProps extends TextInputProps {
-  label: string;
+  label?: string;
   containerStyle?: object;
 }
 
 export default function Input({ label, containerStyle, style, ...props }: InputProps) {
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.label}>{label}</Text>
+      {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
-        style={[styles.input, style]}
-        placeholderTextColor={Colors.placeholder}
+        style={[styles.input, style, { paddingLeft: 12 }]}
+        placeholderTextColor={Colors.primary}
         {...props} // Meneruskan semua props lain ke TextInput
       />
     </View>

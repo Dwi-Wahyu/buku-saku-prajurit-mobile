@@ -1,16 +1,42 @@
 import Colors from 'constants/Colors';
+import { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 
 type ButtonProps = {
-  title: string;
+  title?: string;
+  disabled?: boolean;
   onPress: () => void;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  children?: ReactNode;
 };
 
-export default function Button({ title, onPress, style, textStyle }: ButtonProps) {
+export default function Button({
+  title = '',
+  onPress,
+  style,
+  textStyle,
+  disabled = false,
+  children,
+}: ButtonProps) {
+  if (children) {
+    return (
+      <TouchableOpacity
+        disabled={disabled}
+        style={[styles.button, style]}
+        onPress={onPress}
+        activeOpacity={0.7}>
+        {children}
+      </TouchableOpacity>
+    );
+  }
+
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress} activeOpacity={0.7}>
+    <TouchableOpacity
+      disabled={disabled}
+      style={[styles.button, style]}
+      onPress={onPress}
+      activeOpacity={0.7}>
       <Text style={[styles.text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
